@@ -20,5 +20,5 @@ runs:
     SOURCE_DIR: '.'
     CHART_FOLDER: 'chart'
     FORCE: 'True'
-    CHARTMUSEUM_URL: ${{ repository-url }}
-    CHARTMUSEUM_ACCESS_TOKEN: ${{ access-token }}
+    CHARTMUSEUM_URL: ${{ inputs.repository-url }}
+    CHARTMUSEUM_ACCESS_TOKEN: ${{ inputs.access-token }}

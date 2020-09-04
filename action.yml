@@ -9,4 +9,4 @@ outputs:
     description: 'The time it completed'
 runs:
   using: 'docker'
-  image: 'bsord/cf-helm-push'
+  image: 'docker://bsord/cf-helm-push:latest'

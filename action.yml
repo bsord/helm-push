@@ -1,6 +1,8 @@
 # action.yml
 name: 'CF-Helm-Push'
 description: 'This action pushes a local chart to a CodeFresh hosted chart museum repository using a token'
+icon: 'code'
+color: 'green'
 inputs:
   cf-api-key:  # id of input
     description: 'CodeFresh API Key'

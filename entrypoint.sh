@@ -31,7 +31,6 @@ fi
 cd ${SOURCE_DIR}/${CHART_FOLDER}
 
 helm inspect chart .
-
-helm package .
-
-helm push ${CHART_FOLDER}-* ${CHARTMUSEUM_URL} --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
+helm lint .
+helm repo add chart-repo ${CHARTMUSEUM_URL}
+helm push . chart-repo --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}

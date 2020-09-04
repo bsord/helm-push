@@ -15,6 +15,7 @@ The time it completed
 
 ## Example usage
 
-uses: actions/hello-world-docker-action@v1
+uses: actions/hello-world-docker-action@v7
 with:
   api-key: ${secrets.cf-api-key}
+  reposiory: "cm://h.cfcr.io/your_cf_user/default"

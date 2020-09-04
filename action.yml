@@ -8,6 +8,11 @@ inputs:
     description: 'CodeFresh API Key'
     required: true
     default: ''
+  repository:  # repository
+    description: repository
+    required: true
+    default: ''
+
 outputs:
   time: # id of output
     description: 'The time it completed'
@@ -16,3 +21,4 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.cf-api-key }}
+    - ${{ inputs.repository }}

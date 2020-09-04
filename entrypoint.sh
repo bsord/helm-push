@@ -16,6 +16,10 @@ if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
   exit 1
 fi
 
+if [ -z "$SOURCE_DIR" ]; then
+  SOURCE_DIR="."
+fi
+
 if [ -z "$FORCE" ]; then
   FORCE=""
 elif [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ]; then
@@ -24,7 +28,7 @@ fi
 
 
 
-cd ${CHART_FOLDER}
+cd ${SOURCE_DIR}/${CHART_FOLDER}
 
 helm inspect chart .
 helm lint .

@@ -4,7 +4,7 @@ description: 'This action pushes a local chart to a CodeFresh hosted chart museu
 icon: 'code'
 color: 'green'
 inputs:
-  cf-api-key:  # id of input
+  cf-api-key:  # api key
     description: 'CodeFresh API Key'
     required: true
     default: ''

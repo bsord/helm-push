@@ -1,12 +1,24 @@
 # action.yml
 name: 'CF-Helm-Push'
-description: 'This action pushes a local chart to a CodeFresh hosted chart museum repository using a token'
+description: 'Pushes a local chart to a ChartMusem backed repository with access token support for CodeFresh'
 branding:
   color: 'green'
   icon: 'upload-cloud'
-outputs:
-  time: # id of output
-    description: 'The time it completed'
+inputs:
+  access-token:  # id of input
+    description: 'API Token with read/write permissions to the helm repository'
+    required: true
+    default: ''
+  repository-url:  # Repository URL
+    description: 'Repository url using ChartMuseum format'
+    required: true
+    default: ''
 runs:
   using: 'docker'
   image: 'docker://bsord/cf-helm-push:latest'
+  env:
+    SOURCE_DIR: '.'
+    CHART_FOLDER: 'chart'
+    FORCE: 'True'
+    CHARTMUSEUM_URL: ${{ repository-url }}
+    CHARTMUSEUM_ACCESS_TOKEN: ${{ api-token }}

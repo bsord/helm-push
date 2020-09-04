@@ -1,0 +1,16 @@
+# action.yml
+name: 'CF-Helm-Push'
+description: 'This action pushes a local chart to a CodeFresh hosted chart museum repository using a token'
+inputs:
+  cf-api-key:  # id of input
+    description: 'CodeFresh API Key'
+    required: true
+    default: ''
+outputs:
+  time: # id of output
+    description: 'The time it completed'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.tf-api-key }}

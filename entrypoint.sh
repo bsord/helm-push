@@ -1,5 +1,5 @@
 #!/bin/sh -l
-codefresh auth create-context --api-key $1
+codefresh auth create-context --api-key "$1"
 
 ls
 echo "Hello $1"

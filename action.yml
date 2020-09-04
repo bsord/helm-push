@@ -15,4 +15,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.tf-api-key }}
+    - ${{ inputs.cf-api-key }}

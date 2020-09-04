@@ -5,20 +5,27 @@ branding:
   color: 'green'
   icon: 'upload-cloud'
 inputs:
-  access-token:  # id of input
+  access-token:
     description: 'API Token with read/write permissions to the helm repository'
     required: true
     default: ''
-  repository-url:  # Repository URL
+  repository-url:
     description: 'Repository url using ChartMuseum format'
     required: true
     default: ''
+  chart-folder:
+      description: 'Relative path to chart folder'
+      required: false
+      default: 'chart'
+  force:
+    description: 'Whether or not to override existing chart with same version'
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'docker://bsord/cf-helm-push:latest'
   env:
-    SOURCE_DIR: '.'
-    CHART_FOLDER: 'chart'
-    FORCE: 'True'
+    CHART_FOLDER: ${{ inputs.chart-folder }}
+    FORCE: ${{ inputs.force }}
     CHARTMUSEUM_URL: ${{ inputs.repository-url }}
     CHARTMUSEUM_ACCESS_TOKEN: ${{ inputs.access-token }}

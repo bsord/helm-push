@@ -1,24 +1,12 @@
 # action.yml
 name: 'CF-Helm-Push'
 description: 'This action pushes a local chart to a CodeFresh hosted chart museum repository using a token'
-icon: 'code'
-color: 'green'
-inputs:
-  cf-api-key:  # api key
-    description: 'CodeFresh API Key'
-    required: true
-    default: ''
-  repository:  # repository
-    description: repository
-    required: true
-    default: ''
-
+branding:
+  color: 'green'
+  icon: 'upload-cloud'
 outputs:
   time: # id of output
     description: 'The time it completed'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.cf-api-key }}
-    - ${{ inputs.repository }}
+  image: 'bsord/cf-helm-push'

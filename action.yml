@@ -21,4 +21,4 @@ runs:
     CHART_FOLDER: 'chart'
     FORCE: 'True'
     CHARTMUSEUM_URL: ${{ repository-url }}
-    CHARTMUSEUM_ACCESS_TOKEN: ${{ api-token }}
+    CHARTMUSEUM_ACCESS_TOKEN: ${{ access-token }}

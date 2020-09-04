@@ -3,19 +3,31 @@ This action pushes a local chart to a CodeFresh hosted chart museum repository u
 
 ## Inputs
 
-### `cf-api-key`
+### `access-token`
 
 **Required** CodeFresh API Key.
 
-## Outputs
+### `repository-url`
 
-### `time`
+**Required** ChartMuseum protocol url for destination repository.
 
-The time it completed
+### `chart-folder`
+
+Folder within repo that contains the chart to be uploaded.
+
+### `force`
+
+Whether or not to overwrite existing chart with same version.
 
 ## Example usage
 
-uses: actions/hello-world-docker-action@v7
-with:
-  api-key: ${secrets.cf-api-key}
-  reposiory: "cm://h.cfcr.io/your_cf_user/default"
+```
+steps:
+  - name: Push Helm Chart to ChartMuseum
+    uses: bsord/cf-helm-push@v14.0.7
+    with:
+      access-token: ${{ secrets.CF_API_KEY }}
+      repository-url: 'cm://h.cfcr.io/user_or_org/reponame'
+      force: true
+      chart-folder: chart
+```

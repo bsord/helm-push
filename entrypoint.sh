@@ -22,7 +22,7 @@ fi
 
 if [ -z "$FORCE" ]; then
   FORCE=""
-elif [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ]; then
+elif [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ] || [ "$FORCE" == "true" ]; then
   FORCE="-f"
 fi
 
@@ -33,4 +33,4 @@ cd ${SOURCE_DIR}/${CHART_FOLDER}
 helm inspect chart .
 helm lint .
 helm repo add chart-repo ${CHARTMUSEUM_URL}
-helm push . chart-repo --access-token ${CHARTMUSEUM_ACCESS_TOKEN}
+helm push . chart-repo --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}

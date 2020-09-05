@@ -1,27 +1,9 @@
-# cf-helm-push
-This action pushes a local chart to a CodeFresh hosted chart museum repository using a token
+# Helm Push to ChartMuseum
 
-## Inputs
+Push a chart to a ChartMuseum compatible repository using Token based authencation support with Helm v3
 
-### `access-token`
-
-**Required** CodeFresh API Key.
-
-### `repository-url`
-
-**Required** ChartMuseum protocol url for destination repository.
-
-### `chart-folder`
-
-Folder within repo that contains the chart to be uploaded.
-
-### `force`
-
-Whether or not to overwrite existing chart with same version.
-
-## Example usage
-
-```
+## Usage
+```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
     uses: bsord/cf-helm-push@v14.0.7
@@ -31,3 +13,16 @@ steps:
       force: true
       chart-folder: chart
 ```
+
+##3 Paramaters
+
+| Key | Value | Required | Default |
+| ------------- | ------------- | ------------- | ------------- |
+| `access-token` | API Token from CodeFresh with Helm read/write permissions | **Yes** | "" |
+| `repository-url` | ChartMuseum repository url, prefix with cm:// | **Yes** | "" |
+| `chart-folder` | Relative path to chart folder to be published| No | chart |
+| `force` | Force overwrite if version already exists | No | false |
+
+## License
+
+This project is distributed under the [MIT license](LICENSE.md).

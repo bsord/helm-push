@@ -2,22 +2,13 @@
 set -e
 
 if [ -z "$CHART_FOLDER" ]; then
-  echo "CHART_FOLDER is not set. Quitting."
+  echo "Chart folder is required but not defined."
   exit 1
 fi
 
 if [ -z "$CHARTMUSEUM_URL" ]; then
-  echo "CHARTMUSEUM_URL is not set. Quitting."
+  echo "Repository url is required but not defined."
   exit 1
-fi
-
-if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
-  echo "CHARTMUSEUM_USER is not set. Quitting."
-  exit 1
-fi
-
-if [ -z "$SOURCE_DIR" ]; then
-  SOURCE_DIR="."
 fi
 
 if [ -z "$FORCE" ]; then
@@ -26,9 +17,40 @@ elif [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ] || 
   FORCE="-f"
 fi
 
+if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ] && [ [ -z "$CHARTMUSEUM_USERNAME" ] || [ -z "$CHARTMUSEUM_PASSWORD" ] ]
+  echo "Credentials are required, but none defined."
+  exit 1
+fi
 
+if [ "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
+  echo "Access token is defined, using bearer auth."
+  helm inspect chart .
+  helm lint .
+  helm repo add chart-repo ${CHARTMUSEUM_URL}
+  helm push . chart-repo --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
+fi
 
-cd ${SOURCE_DIR}/${CHART_FOLDER}
+if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
+  echo "Access token is not defined, using basic auth."
+
+  if [ -z "$CHARTMUSEUM_USERNAME" ]; then
+    echo "Username is required but not defined."
+    exit 1
+  fi
+
+  if [ -z "$CHARTMUSEUM_PASSWORD" ]; then
+    echo "Password is required but not defined."
+    exit 1
+  fi
+
+  helm inspect chart .
+  helm lint .
+  helm repo add chart-repo ${CHARTMUSEUM_URL}
+  helm push . chart-repo --username ${CHARTMUSEUM_USERNAME} --password ${CHARTMUSEUM_PASSWORD} ${FORCE}
+  
+fi
+
+cd ${CHART_FOLDER}
 
 helm inspect chart .
 helm lint .

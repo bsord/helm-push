@@ -14,7 +14,7 @@ steps:
       chart-folder: chart
 ```
 
-### Paramaters
+### Parameters
 
 | Key | Value | Required | Default |
 | ------------- | ------------- | ------------- | ------------- |

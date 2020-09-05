@@ -18,7 +18,7 @@ inputs:
     required: false
     default: ''
   repository-url:
-    description: 'Repository url using ChartMuseum format'
+    description: 'Repository url'
     required: true
     default: ''
   chart-folder:

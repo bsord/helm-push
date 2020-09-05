@@ -11,7 +11,7 @@ steps:
     uses: bsord/helm-push@v1
     with:
       access-token: ${{ secrets.CF_API_KEY }}
-      repository-url: 'cm://h.cfcr.io/user_or_org/reponame'
+      repository-url: 'https://h.cfcr.io/user_or_org/reponame'
       force: true
       chart-folder: chart
 ```

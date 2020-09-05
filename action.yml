@@ -1,5 +1,5 @@
 # action.yml
-name: 'CF-Helm-Push'
+name: 'Helm PUsh'
 description: 'Pushes a local chart to a ChartMusem backed repository with access token support for CodeFresh'
 branding:
   color: 'green'

@@ -23,7 +23,7 @@ inputs:
     default: 'false'
 runs:
   using: 'docker'
-  image: 'docker://bsord/cf-helm-push:latest'
+  image: 'docker://bsord/helm-push:latest'
   env:
     CHART_FOLDER: ${{ inputs.chart-folder }}
     FORCE: ${{ inputs.force }}

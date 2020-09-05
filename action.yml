@@ -1,13 +1,21 @@
 # action.yml
 name: 'Helm Push'
-description: 'Pushes a local chart to a ChartMusem backed repository with access token support for CodeFresh'
+description: 'Pushes a local chart to a ChartMusem compatible repository. Supports token based auth and Chart.yaml version override.'
 branding:
   color: 'green'
   icon: 'upload-cloud'
 inputs:
   access-token:
     description: 'API Token with read/write permissions to the helm repository'
-    required: true
+    required: false
+    default: ''
+  username:
+    description: 'API Token with read/write permissions to the helm repository'
+    required: false
+    default: ''
+  password:
+    description: 'API Token with read/write permissions to the helm repository'
+    required: false
     default: ''
   repository-url:
     description: 'Repository url using ChartMuseum format'
@@ -17,6 +25,10 @@ inputs:
       description: 'Relative path to chart folder'
       required: false
       default: 'chart'
+  version:
+    description: 'Relative path to chart folder'
+    required: false
+    default: 'chart'
   force:
     description: 'Whether or not to override existing chart with same version'
     required: false
@@ -29,3 +41,6 @@ runs:
     FORCE: ${{ inputs.force }}
     CHARTMUSEUM_URL: ${{ inputs.repository-url }}
     CHARTMUSEUM_ACCESS_TOKEN: ${{ inputs.access-token }}
+    CHARTMUSEUM_USERNAME: ${{ inputs.username }}
+    CHARTMUSEUM_PASSWORD: ${{ inputs.password }}
+    CHARTMUSEUM_VERSION: ${{ inputs.version }}

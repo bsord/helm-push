@@ -2,22 +2,18 @@
 set -e
 
 if [ -z "$CHART_FOLDER" ]; then
-  echo "CHART_FOLDER is not set. Quitting."
+  echo "Chart folder is required but not defined."
   exit 1
 fi
 
 if [ -z "$CHARTMUSEUM_URL" ]; then
-  echo "CHARTMUSEUM_URL is not set. Quitting."
+  echo "Repository url is required but not defined."
   exit 1
 fi
 
-if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
-  echo "CHARTMUSEUM_USER is not set. Quitting."
+if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ] && [ [ -z "$CHARTMUSEUM_USERNAME" ] || [ -z "$CHARTMUSEUM_PASSWORD" ] ]
+  echo "Credentials are required, but none defined."
   exit 1
-fi
-
-if [ -z "$SOURCE_DIR" ]; then
-  SOURCE_DIR="."
 fi
 
 if [ -z "$FORCE" ]; then
@@ -26,11 +22,29 @@ elif [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ] || 
   FORCE="-f"
 fi
 
+if [ "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
+  echo "Access token is defined, using bearer auth."
+  CHARTMUSEUM_ACCESS_TOKEN="--access-token ${CHARTMUSEUM_ACCESS_TOKEN}"
+fi
 
 
-cd ${SOURCE_DIR}/${CHART_FOLDER}
+if [ "$CHARTMUSEUM_USERNAME" ]; then
+  echo "Username is defined, using as parameter."
+  CHARTMUSEUM_USERNAME="--username ${CHARTMUSEUM_USERNAME}"
+fi
 
+if [ "$CHARTMUSEUM_PASSWORD" ]; then
+  echo "Password is defined, using as parameter."
+  CHARTMUSEUM_PASSWORD="--password ${CHARTMUSEUM_PASSWORD}"
+fi
+
+if [ "$CHARTMUSEUM_VERSION" ]; then
+  echo "Password is defined, using as parameter."
+  CHARTMUSEUM_VERSION="--password ${CHARTMUSEUM_VERSION}"
+fi
+
+cd ${CHART_FOLDER}
 helm inspect chart .
 helm lint .
-helm repo add chart-repo ${CHARTMUSEUM_URL}
-helm push . chart-repo --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
+helm push . ${CHARTMUSEUM_URL} ${CHARTMUSEUM_USERNAME} ${CHARTMUSEUM_PASSWORD} ${CHARTMUSEUM_ACCESS_TOKEN} ${CHARTMUSEUM_VERSION} ${FORCE}
+  

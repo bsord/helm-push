@@ -45,8 +45,7 @@ if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
 
   helm inspect chart .
   helm lint .
-  helm repo add chart-repo ${CHARTMUSEUM_URL}
-  helm push . chart-repo --username ${CHARTMUSEUM_USERNAME} --password ${CHARTMUSEUM_PASSWORD} ${FORCE}
+  helm push . ${CHARTMUSEUM_URL} --username ${CHARTMUSEUM_USERNAME} --password ${CHARTMUSEUM_PASSWORD} ${FORCE}
   
 fi
 
@@ -54,5 +53,4 @@ cd ${CHART_FOLDER}
 
 helm inspect chart .
 helm lint .
-helm repo add chart-repo ${CHARTMUSEUM_URL}
-helm push . chart-repo --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
+helm push . ${CHARTMUSEUM_URL} --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}

@@ -8,7 +8,7 @@ Push a chart to a ChartMuseum compatible repository using Token based authencati
 ```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
-    uses: bsord/cf-helm-push@v1
+    uses: bsord/helm-push@v1
     with:
       access-token: ${{ secrets.CF_API_KEY }}
       repository-url: 'cm://h.cfcr.io/user_or_org/reponame'

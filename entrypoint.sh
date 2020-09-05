@@ -24,9 +24,10 @@ fi
 
 if [ "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
   echo "Access token is defined, using bearer auth."
+
+  cd ${CHART_FOLDER}
   helm inspect chart .
   helm lint .
-  helm repo add chart-repo ${CHARTMUSEUM_URL}
   helm push . chart-repo --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
 fi
 
@@ -43,14 +44,9 @@ if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
     exit 1
   fi
 
+  cd ${CHART_FOLDER}
   helm inspect chart .
   helm lint .
   helm push . ${CHARTMUSEUM_URL} --username ${CHARTMUSEUM_USERNAME} --password ${CHARTMUSEUM_PASSWORD} ${FORCE}
   
 fi
-
-cd ${CHART_FOLDER}
-
-helm inspect chart .
-helm lint .
-helm push . ${CHARTMUSEUM_URL} --access-token ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}

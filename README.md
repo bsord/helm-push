@@ -1,6 +1,6 @@
 # Helm Push to ChartMuseum
 
-Push a chart to a ChartMuseum compatible repository using Token based authencation support with Helm v3
+Push a chart to a ChartMuseum compatible repository using Token based authencation with Helm v3
 
 ## Usage
 ```yaml
@@ -14,7 +14,7 @@ steps:
       chart-folder: chart
 ```
 
-##3 Paramaters
+### Paramaters
 
 | Key | Value | Required | Default |
 | ------------- | ------------- | ------------- | ------------- |

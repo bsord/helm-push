@@ -35,8 +35,8 @@ steps:
 | Key | Value | Required | Default |
 | ------------- | ------------- | ------------- | ------------- |
 | `access-token` | API Token from CodeFresh with Helm read/write permissions | **Yes** (if using token auth) | "" |
-| `username` | Relative path to chart folder to be published | **Yes** (if using pw auth) | chart |
-| `password` | Relative path to chart folder to be published | **Yes** (if using pw auth) | chart |
+| `username` | Username for repository | **Yes** (if using pw auth) | "" |
+| `password` | Password for repository | **Yes** (if using pw auth) | "" |
 | `repository-url` | ChartMuseum repository url | **Yes** | "" |
 | `chart-folder` | Relative path to chart folder to be published| No | chart |
 | `force` | Force overwrite if version already exists | No | false |

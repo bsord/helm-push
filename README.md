@@ -2,6 +2,7 @@
 ![Build](https://github.com/bsord/helm-push/workflows/Build/badge.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bsord/helm-push.svg)
 ![License](https://img.shields.io/github/license/bsord/helm-push.svg?style=flat)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
 
 Push a chart to a ChartMuseum compatible repository with Helm v3
 

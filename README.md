@@ -13,7 +13,7 @@ steps:
   - name: Push Helm Chart to ChartMuseum
     uses: bsord/helm-push@v1
     with:
-      access-token: ${{ secrets.CF_API_KEY }}
+      access-token: ${{ secrets.HELM_API_KEY }}
       repository-url: 'https://h.cfcr.io/user_or_org/reponame'
       force: true
       chart-folder: chart
@@ -25,8 +25,8 @@ steps:
   - name: Push Helm Chart to ChartMuseum
     uses: bsord/helm-push@v1
     with:
-      username: ${{ secrets.CF_USERNAME }}
-      password: ${{ secrets.CF_PASSWORD }}
+      username: ${{ secrets.HELM_USERNAME }}
+      password: ${{ secrets.HELM_PASSWORD }}
       repository-url: 'https://h.cfcr.io/user_or_org/reponame'
       force: true
       chart-folder: chart

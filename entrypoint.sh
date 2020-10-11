@@ -40,7 +40,7 @@ fi
 
 if [ "$CHARTMUSEUM_VERSION" ]; then
   echo "Version is defined, using as parameter."
-  CHARTMUSEUM_VERSION="--password ${CHARTMUSEUM_VERSION}"
+  CHARTMUSEUM_VERSION="--version ${CHARTMUSEUM_VERSION}"
 fi
 
 if [ "$CHARTMUSEUM_APPVERSION" ]; then
@@ -49,7 +49,8 @@ if [ "$CHARTMUSEUM_APPVERSION" ]; then
 fi
 
 cd ${CHART_FOLDER}
-helm inspect chart .
 helm lint .
-helm push . ${CHARTMUSEUM_URL} ${CHARTMUSEUM_USERNAME} ${CHARTMUSEUM_PASSWORD} ${CHARTMUSEUM_ACCESS_TOKEN} ${CHARTMUSEUM_VERSION} ${FORCE}
+helm package . ${CHARTMUSEUM_APPVERSION} ${CHARTMUSEUM_VERSION}
+helm inspect chart *.tgz
+helm push *.tgz ${CHARTMUSEUM_URL} ${CHARTMUSEUM_USERNAME} ${CHARTMUSEUM_PASSWORD} ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
   

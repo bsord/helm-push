@@ -28,7 +28,11 @@ inputs:
   version:
     description: 'Chart Version'
     required: false
-    default: 'chart'
+    default: ''
+  version:
+    description: 'App Version'
+    required: false
+    default: ''
   force:
     description: 'Whether or not to override existing chart with same version'
     required: false
@@ -44,3 +48,4 @@ runs:
     CHARTMUSEUM_USERNAME: ${{ inputs.username }}
     CHARTMUSEUM_PASSWORD: ${{ inputs.password }}
     CHARTMUSEUM_VERSION: ${{ inputs.version }}
+    CHARTMUSEUM_APPVERSION: ${{ inputs.app-version }}

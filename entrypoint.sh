@@ -43,6 +43,11 @@ if [ "$CHARTMUSEUM_VERSION" ]; then
   CHARTMUSEUM_VERSION="--password ${CHARTMUSEUM_VERSION}"
 fi
 
+if [ "$CHARTMUSEUM_APPVERSION" ]; then
+  echo "Version is defined, using as parameter."
+  CHARTMUSEUM_APPVERSION="--app-version ${CHARTMUSEUM_APPVERSION}"
+fi
+
 cd ${CHART_FOLDER}
 helm inspect chart .
 helm lint .

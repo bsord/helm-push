@@ -39,7 +39,7 @@ if [ "$CHARTMUSEUM_PASSWORD" ]; then
 fi
 
 if [ "$CHARTMUSEUM_VERSION" ]; then
-  echo "Password is defined, using as parameter."
+  echo "Version is defined, using as parameter."
   CHARTMUSEUM_VERSION="--password ${CHARTMUSEUM_VERSION}"
 fi
 

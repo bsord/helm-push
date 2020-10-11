@@ -10,11 +10,11 @@ inputs:
     required: false
     default: ''
   username:
-    description: 'API Token with read/write permissions to the helm repository'
+    description: 'Username read/write permissions to the helm repository'
     required: false
     default: ''
   password:
-    description: 'API Token with read/write permissions to the helm repository'
+    description: 'Password with read/write permissions to the helm repository'
     required: false
     default: ''
   repository-url:
@@ -26,7 +26,7 @@ inputs:
       required: false
       default: 'chart'
   version:
-    description: 'Relative path to chart folder'
+    description: 'Chart Version'
     required: false
     default: 'chart'
   force:

@@ -29,7 +29,7 @@ inputs:
     description: 'Chart Version'
     required: false
     default: ''
-  version:
+  appVersion:
     description: 'App Version'
     required: false
     default: ''
@@ -48,4 +48,4 @@ runs:
     CHARTMUSEUM_USERNAME: ${{ inputs.username }}
     CHARTMUSEUM_PASSWORD: ${{ inputs.password }}
     CHARTMUSEUM_VERSION: ${{ inputs.version }}
-    CHARTMUSEUM_APPVERSION: ${{ inputs.app-version }}
+    CHARTMUSEUM_APPVERSION: ${{ inputs.appVersion }}

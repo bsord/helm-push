@@ -33,6 +33,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           tag-prefix: 'v'
           skip-version-file: true
+          fallback-version: 'v3'
 
       - name: Create Release
         if: ${{ steps.get-next-version.outputs.skipped == 'false' }}

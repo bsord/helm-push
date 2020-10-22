@@ -2,15 +2,12 @@ name: Build
 
 on:
   push:
-    # Publish `master` as Docker `latest` image.
     branches:
       - master
-
-  # Run tests for any PRs.
-  pull_request:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 env:
-  # TODO: Change variable to your image's name.
   IMAGE_NAME: ghcr.io/pepov/helm-push
   PLATFORMS: linux/amd64
 
@@ -28,10 +25,22 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
+      - name: Determine tag or commit
+        uses: haya14busa/action-cond@v1
+        id: refortag
+        with:
+          cond: ${{ startsWith(github.ref, 'refs/tags/') }}
+          if_true: ${{ github.ref }}
+          if_false: latest
+      - name: Determine image tag
+        id: imagetag
+        run: echo "::set-output name=value::${TAG_OR_BRANCH##*/}"
+        env:
+          TAG_OR_BRANCH: ${{ steps.refortag.outputs.value }}
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
-          tags: ${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.imagetag.outputs.value }}
           file: Dockerfile
           platforms: ${{ env.PLATFORMS }}
           push: true

@@ -1,4 +1,13 @@
-# 0.1.0 (2020-10-22)
+## [0.1.1](https://github.com/bsord/helm-push/compare/v0.1.0...v0.1.1) (2020-10-22)
+
+
+### Bug Fixes
+
+* **workflow:** min version ([bbbb58d](https://github.com/bsord/helm-push/commit/bbbb58d68384389d2f2cb59f9f698d4861d22dfd))
+
+
+
+# [0.1.0](https://github.com/bsord/helm-push/compare/4f7aa78af87bd6afb04c0c989296dc1da65c022b...v0.1.0) (2020-10-22)
 
 
 ### Bug Fixes

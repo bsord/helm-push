@@ -28,7 +28,6 @@ jobs:
 
       - name: Generate changelog and tag with new version
         id: get-next-version
-        if: ${{ steps.get-next-version.outputs.skipped == 'false' }}
         uses: bsord/conventional-changelog-action@v3.7.0
         with:
           github-token: ${{ secrets.github_token }}
@@ -36,7 +35,6 @@ jobs:
           skip-version-file: true
 
       - name: Create Release
-        if: ${{ steps.get-next-version.outputs.skipped == 'false' }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
@@ -44,7 +42,7 @@ jobs:
           tag_name: ${{ steps.get-next-version.outputs.version }}
           release_name: ${{ steps.get-next-version.outputs.version }}
           body: ${{ steps.get-next-version.outputs.clean_changelog }}
-          
+
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:

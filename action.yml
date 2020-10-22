@@ -39,7 +39,7 @@ inputs:
     default: 'false'
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/pepov/helm-push:latest'
+  image: 'docker://ghcr.io/pepov/helm-push:v3.0.0'
   env:
     CHART_FOLDER: ${{ inputs.chart-folder }}
     FORCE: ${{ inputs.force }}

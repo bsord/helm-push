@@ -16,9 +16,8 @@ if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ] && [ [ -z "$CHARTMUSEUM_USERNAME" ] -o [ -
   exit 1
 fi
 
-if [ -z "$FORCE" ]; then
-  FORCE=""
-elif [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ] || [ "$FORCE" == "true" ]; then
+FORCE=""
+if [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ] || [ "$FORCE" == "true" ]; then
   FORCE="-f"
 fi
 

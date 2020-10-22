@@ -24,22 +24,27 @@ jobs:
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
-      - name: Determine tag or commit
-        uses: haya14busa/action-cond@v1
-        id: refortag
+      - name: Generate changelog and tag with new version
+        id: get-next-version
+        if: ${{ steps.get-next-version.outputs.skipped == 'false' }}
+        uses: bsord/conventional-changelog-action@v3.7.0
         with:
-          cond: ${{ startsWith(github.ref, 'refs/tags/') }}
-          if_true: ${{ github.ref }}
-          if_false: latest
-      - name: Determine image tag
-        id: imagetag
-        run: echo "::set-output name=value::${TAG_OR_BRANCH##*/}"
+          github-token: ${{ secrets.github_token }}
+          tag-prefix: ''
+          skip-version-file: true
+      - name: Create Release
+        if: ${{ steps.get-next-version.outputs.skipped == 'false' }}
+        uses: actions/create-release@v1
         env:
-          TAG_OR_BRANCH: ${{ steps.refortag.outputs.value }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          tag_name: ${{ steps.get-next-version.outputs.version }}
+          release_name: ${{ steps.get-next-version.outputs.version }}
+          body: ${{ steps.get-next-version.outputs.clean_changelog }}
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
-          tags: ${{ env.IMAGE_NAME }}:${{ steps.imagetag.outputs.value }}
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.get-next-version.outputs.version }}
           file: Dockerfile
           platforms: ${{ env.PLATFORMS }}
           push: true

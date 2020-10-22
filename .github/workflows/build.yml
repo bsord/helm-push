@@ -35,6 +35,7 @@ jobs:
           skip-version-file: true
 
       - name: Create Release
+        if: ${{ steps.get-next-version.outputs.skipped == 'false' }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}

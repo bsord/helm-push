@@ -31,7 +31,6 @@ jobs:
         uses: bsord/conventional-changelog-action@v3.7.0
         with:
           github-token: ${{ secrets.github_token }}
-          tag-prefix: ''
           skip-version-file: true
 
       - name: Create Release

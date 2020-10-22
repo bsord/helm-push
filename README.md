@@ -36,7 +36,7 @@ steps:
 
 | Key | Value | Required | Default |
 | ------------- | ------------- | ------------- | ------------- |
-| `access-token` | API Token from CodeFresh with Helm read/write permissions | **Yes** (if using token auth) | "" |
+| `access-token` | API Token with Helm read/write permissions | **Yes** (if using token auth) | "" |
 | `username` | Username for repository | **Yes** (if using pw auth) | "" |
 | `password` | Password for repository | **Yes** (if using pw auth) | "" |
 | `repository-url` | ChartMuseum repository url | **Yes** | "" |

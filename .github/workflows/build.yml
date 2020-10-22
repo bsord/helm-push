@@ -8,7 +8,7 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+"
 
 env:
-  IMAGE_NAME: ghcr.io/pepov/helm-push
+  IMAGE_NAME: ghcr.io/bsord/helm-push
   PLATFORMS: linux/amd64
 
 jobs:

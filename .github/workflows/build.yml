@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -24,6 +25,7 @@ jobs:
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
+
       - name: Generate changelog and tag with new version
         id: get-next-version
         if: ${{ steps.get-next-version.outputs.skipped == 'false' }}
@@ -32,6 +34,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           tag-prefix: ''
           skip-version-file: true
+
       - name: Create Release
         if: ${{ steps.get-next-version.outputs.skipped == 'false' }}
         uses: actions/create-release@v1
@@ -41,6 +44,7 @@ jobs:
           tag_name: ${{ steps.get-next-version.outputs.version }}
           release_name: ${{ steps.get-next-version.outputs.version }}
           body: ${{ steps.get-next-version.outputs.clean_changelog }}
+          
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:

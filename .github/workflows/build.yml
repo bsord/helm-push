@@ -45,7 +45,7 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
-          tags: ${{ env.IMAGE_NAME }}:${{ steps.get-next-version.outputs.version }}
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.imagetag.outputs.value }}
           file: Dockerfile
           platforms: ${{ env.PLATFORMS }}
           push: true

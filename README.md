@@ -11,7 +11,7 @@ Using Token Auth:
 ```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
-    uses: bsord/helm-push@v1
+    uses: bsord/helm-push@v3
     with:
       access-token: ${{ secrets.HELM_API_KEY }}
       repository-url: 'https://h.cfcr.io/user_or_org/reponame'
@@ -23,7 +23,7 @@ Using Password Auth:
 ```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
-    uses: bsord/helm-push@v1
+    uses: bsord/helm-push@v3
     with:
       username: ${{ secrets.HELM_USERNAME }}
       password: ${{ secrets.HELM_PASSWORD }}

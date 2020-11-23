@@ -49,10 +49,9 @@ if [ "$CHARTMUSEUM_APPVERSION" ]; then
 fi
 
 cd ${CHART_FOLDER}
-helm repo add https://charts.helm.sh/stable
+helm repo add stable https://charts.helm.sh/stable
 helm repo update
 helm lint .
 helm package . ${CHARTMUSEUM_APPVERSION} ${CHARTMUSEUM_VERSION}
 helm inspect chart *.tgz
 helm push *.tgz ${CHARTMUSEUM_URL} ${CHARTMUSEUM_USERNAME} ${CHARTMUSEUM_PASSWORD} ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
-  

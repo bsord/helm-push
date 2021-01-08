@@ -11,7 +11,7 @@ if [ -z "$CHARTMUSEUM_URL" ]; then
   exit 1
 fi
 
-if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ] && [ [ -z "$CHARTMUSEUM_USERNAME" ] -o [ -z "$CHARTMUSEUM_PASSWORD" ] ]; then
+if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ] && ( [ -z "$CHARTMUSEUM_USERNAME" ] || [ -z "$CHARTMUSEUM_PASSWORD" ] ); then
   echo "Credentials are required, but none defined."
   exit 1
 fi

@@ -11,9 +11,11 @@ if [ -z "$CHARTMUSEUM_URL" ]; then
   exit 1
 fi
 
-if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ] && ( [ -z "$CHARTMUSEUM_USERNAME" ] || [ -z "$CHARTMUSEUM_PASSWORD" ] ); then
-  echo "Credentials are required, but none defined."
-  exit 1
+if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
+  if [ -z "$CHARTMUSEUM_USERNAME" ] || [ -z "$CHARTMUSEUM_PASSWORD" ]; then
+    echo "Credentials are required, but none defined."
+    exit 1
+  fi
 fi
 
 if [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ] || [ "$FORCE" == "true" ]; then
@@ -44,7 +46,7 @@ if [ "$CHARTMUSEUM_VERSION" ]; then
 fi
 
 if [ "$CHARTMUSEUM_APPVERSION" ]; then
-  echo "Version is defined, using as parameter."
+  echo "App version is defined, using as parameter."
   CHARTMUSEUM_APPVERSION="--app-version ${CHARTMUSEUM_APPVERSION}"
 fi
 

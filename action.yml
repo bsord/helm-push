@@ -43,7 +43,7 @@ inputs:
     default: 'false'
 runs:
   using: 'docker'
-  image: 'docker://bsord/helm-push:v3.0.0'
+  image: 'Dockerfile'
   env:
     CHART_FOLDER: ${{ inputs.chart-folder }}
     FORCE: ${{ inputs.force }}

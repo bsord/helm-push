@@ -24,6 +24,17 @@ else
   FORCE=""
 fi
 
+if [ "$USE_OCI_REGISTRY" ]; then
+  echo "OCI SPECIFIED, USING HELM OCI FEATURES"
+  REGISTRY=$(echo "${REGISTRY_URL}" | awk -F[/:] '{print $4}') # Get registry host from url
+  echo "${REGISTRY_ACCESS_TOKEN}" | helm registry login -u ${REGISTRY_USERNAME} --password-stdin ${REGISTRY} # Authenticate registry
+  REGISTRY_URL=$(echo "${REGISTRY_URL#*//}")
+  helm chart save ${CHART_FOLDER} ${REGISTRY_URL} # Save the chart, using tag from the chart
+  FULLPACKAGEREF=$(helm chart list | sed '2q;d' | cut -d' ' -f1) # Get full package reference from newly saved chart
+  helm chart push ${FULLPACKAGEREF} # Push chart to registry
+  exit 0
+fi
+
 if [ "$REGISTRY_ACCESS_TOKEN" ]; then
   echo "Access token is defined, using bearer auth."
   REGISTRY_ACCESS_TOKEN="--access-token ${REGISTRY_ACCESS_TOKEN}"
@@ -50,15 +61,7 @@ if [ "$REGISTRY_APPVERSION" ]; then
   REGISTRY_APPVERSION="--app-version ${REGISTRY_APPVERSION}"
 fi
 
-if [ "$USE_OCI_REGISTRY" ]; then
-  echo "OCI SPECIFIED, USING HELM OCI FEATURES"
-  REGISTRY= echo "${REGISTRY_URL}" | awk -F[/:] '{print $4}' # Get registry host from url
-  echo "${REGISTRY_ACCESS_TOKEN}" | helm registry login -u ${REGISTRY_USERNAME} --password-stdin ${REGISTRY} # Authenticate registry
-  helm chart save ${CHART_FOLDER} ${REGISTRY_URL} # Save the chart, using tag from the chart
-  FULLPACKAGEREF=helm chart list | sed '2q;d' | cut -d' ' -f1 # Get full package reference from newly saved chart
-  helm chart push ${FULLPACKAGEREF} # Push chart to registry
-  exit 0
-fi
+
 
 cd ${CHART_FOLDER}
 helm repo add stable https://charts.helm.sh/stable

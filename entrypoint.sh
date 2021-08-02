@@ -6,13 +6,13 @@ if [ -z "$CHART_FOLDER" ]; then
   exit 1
 fi
 
-if [ -z "$CHARTMUSEUM_URL" ]; then
+if [ -z "$REGISTRY_URL" ]; then
   echo "Repository url is required but not defined."
   exit 1
 fi
 
-if [ -z "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
-  if [ -z "$CHARTMUSEUM_USERNAME" ] || [ -z "$CHARTMUSEUM_PASSWORD" ]; then
+if [ -z "$REGISTRY_ACCESS_TOKEN" ]; then
+  if [ -z "$REGISTRY_USERNAME" ] || [ -z "$REGISTRY_PASSWORD" ]; then
     echo "Credentials are required, but none defined."
     exit 1
   fi
@@ -24,36 +24,50 @@ else
   FORCE=""
 fi
 
-if [ "$CHARTMUSEUM_ACCESS_TOKEN" ]; then
+if [ "$USE_OCI_REGISTRY" == "TRUE" ] || [ "$USE_OCI_REGISTRY" == "true" ]; then
+  export HELM_EXPERIMENTAL_OCI=1
+  echo "OCI SPECIFIED, USING HELM OCI FEATURES"
+  REGISTRY=$(echo "${REGISTRY_URL}" | awk -F[/:] '{print $4}') # Get registry host from url
+  echo "${REGISTRY_ACCESS_TOKEN}" | helm registry login -u ${REGISTRY_USERNAME} --password-stdin ${REGISTRY} # Authenticate registry
+  REGISTRY_URL=$(echo "${REGISTRY_URL#*//}")
+  helm chart save ${CHART_FOLDER} ${REGISTRY_URL} # Save the chart, using tag from the chart
+  FULLPACKAGEREF=$(helm chart list | sed '2q;d' | cut -d' ' -f1) # Get full package reference from newly saved chart
+  helm chart push ${FULLPACKAGEREF} # Push chart to registry
+  exit 0
+fi
+
+if [ "$REGISTRY_ACCESS_TOKEN" ]; then
   echo "Access token is defined, using bearer auth."
-  CHARTMUSEUM_ACCESS_TOKEN="--access-token ${CHARTMUSEUM_ACCESS_TOKEN}"
+  REGISTRY_ACCESS_TOKEN="--access-token ${REGISTRY_ACCESS_TOKEN}"
 fi
 
 
-if [ "$CHARTMUSEUM_USERNAME" ]; then
+if [ "$REGISTRY_USERNAME" ]; then
   echo "Username is defined, using as parameter."
-  CHARTMUSEUM_USERNAME="--username ${CHARTMUSEUM_USERNAME}"
+  REGISTRY_USERNAME="--username ${REGISTRY_USERNAME}"
 fi
 
-if [ "$CHARTMUSEUM_PASSWORD" ]; then
+if [ "$REGISTRY_PASSWORD" ]; then
   echo "Password is defined, using as parameter."
-  CHARTMUSEUM_PASSWORD="--password ${CHARTMUSEUM_PASSWORD}"
+  REGISTRY_PASSWORD="--password ${REGISTRY_PASSWORD}"
 fi
 
-if [ "$CHARTMUSEUM_VERSION" ]; then
+if [ "$REGISTRY_VERSION" ]; then
   echo "Version is defined, using as parameter."
-  CHARTMUSEUM_VERSION="--version ${CHARTMUSEUM_VERSION}"
+  REGISTRY_VERSION="--version ${REGISTRY_VERSION}"
 fi
 
-if [ "$CHARTMUSEUM_APPVERSION" ]; then
+if [ "$REGISTRY_APPVERSION" ]; then
   echo "App version is defined, using as parameter."
-  CHARTMUSEUM_APPVERSION="--app-version ${CHARTMUSEUM_APPVERSION}"
+  REGISTRY_APPVERSION="--app-version ${REGISTRY_APPVERSION}"
 fi
+
+
 
 cd ${CHART_FOLDER}
 helm repo add stable https://charts.helm.sh/stable
 helm repo update
 helm lint .
-helm package . ${CHARTMUSEUM_APPVERSION} ${CHARTMUSEUM_VERSION}
+helm package . ${REGISTRY_APPVERSION} ${REGISTRY_VERSION}
 helm inspect chart *.tgz
-helm push *.tgz ${CHARTMUSEUM_URL} ${CHARTMUSEUM_USERNAME} ${CHARTMUSEUM_PASSWORD} ${CHARTMUSEUM_ACCESS_TOKEN} ${FORCE}
+helm push *.tgz ${REGISTRY_URL} ${REGISTRY_USERNAME} ${REGISTRY_PASSWORD} ${REGISTRY_ACCESS_TOKEN} ${FORCE}

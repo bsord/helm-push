@@ -1,23 +1,23 @@
 # action.yml
 name: 'Helm Push'
-description: 'Pushes a local chart to a ChartMusem compatible repository. Supports token based auth and Chart.yaml version override.'
+description: 'Pushes a local chart to a ChartMusem or OCI compatible registry. Supports token based auth and Chart.yaml version override.'
 branding:
   color: 'green'
   icon: 'upload-cloud'
 inputs:
   access-token:
-    description: 'API Token with read/write permissions to the helm repository'
+    description: 'API Token with read/write permissions to the helm registry'
     required: false
     default: ''
   username:
-    description: 'Username read/write permissions to the helm repository'
+    description: 'Username read/write permissions to the helm registry'
     required: false
     default: ''
   password:
-    description: 'Password with read/write permissions to the helm repository'
+    description: 'Password with read/write permissions to the helm registry'
     required: false
     default: ''
-  repository-url:
+  registry-url:
     description: 'Repository url'
     required: true
     default: ''
@@ -37,15 +37,20 @@ inputs:
     description: 'Whether or not to override existing chart with same version'
     required: false
     default: 'false'
+  useOCIRegistry:
+    description: 'If publishing to big cloud registries, utilizing OCI container spec for helm packages, set to true'
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
-  image: 'docker://bsord/helm-push:v3.0.0'
+  image: 'Dockerfile'
   env:
     CHART_FOLDER: ${{ inputs.chart-folder }}
     FORCE: ${{ inputs.force }}
-    CHARTMUSEUM_URL: ${{ inputs.repository-url }}
-    CHARTMUSEUM_ACCESS_TOKEN: ${{ inputs.access-token }}
-    CHARTMUSEUM_USERNAME: ${{ inputs.username }}
-    CHARTMUSEUM_PASSWORD: ${{ inputs.password }}
-    CHARTMUSEUM_VERSION: ${{ inputs.version }}
-    CHARTMUSEUM_APPVERSION: ${{ inputs.appVersion }}
+    REGISTRY_URL: ${{ inputs.registry-url }}
+    REGISTRY_ACCESS_TOKEN: ${{ inputs.access-token }}
+    REGISTRY_USERNAME: ${{ inputs.username }}
+    REGISTRY_PASSWORD: ${{ inputs.password }}
+    REGISTRY_VERSION: ${{ inputs.version }}
+    REGISTRY_APPVERSION: ${{ inputs.appVersion }}
+    USE_OCI_REGISTRY: ${{ inputs.useOCIRegistry }}

@@ -1,8 +1,7 @@
 # Helm Push
-![Build](https://github.com/bsord/helm-push/workflows/Build/badge.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/bsord/helm-push.svg)
-![License](https://img.shields.io/github/license/bsord/helm-push.svg?style=flat)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
+![Build](https://github.com/oodlefinance/helm-push/workflows/Build/badge.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/oodlefinance/helm-push.svg)
+![License](https://img.shields.io/github/license/oodlefinance/helm-push.svg?style=flat)
 
 Push a chart to a ChartMuseum or OCI compatible registry with Helm v3
 

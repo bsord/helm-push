@@ -32,10 +32,10 @@ if [ "$USE_OCI_REGISTRY" == "TRUE" ] || [ "$USE_OCI_REGISTRY" == "true" ]; then
   echo "Packaging chart '$CHART_FOLDER'"
   PKG_RESPONSE=$(helm package $CHART_FOLDER) # package chart
   echo "$PKG_RESPONSE"
-#  CHART_TAR_GZ=$(basename "$PKG_RESPONSE") # extract tar name from helm package stdout
-#  echo "Pushing chart $CHART_TAR_GZ to 'oci://$REGISTRY'"
-#  helm push "$CHART_TAR_GZ" "oci://$REGISTRY"
-#  echo "Successfully pushed chart $CHART_TAR_GZ to 'oci://$REGISTRY'"
+  CHART_TAR_GZ=$(basename "$PKG_RESPONSE") # extract tar name from helm package stdout
+  echo "Pushing chart $CHART_TAR_GZ to 'oci://$REGISTRY'"
+  helm push "$CHART_TAR_GZ" "oci://$REGISTRY"
+  echo "Successfully pushed chart $CHART_TAR_GZ to 'oci://$REGISTRY'"
   exit 0
 fi
 

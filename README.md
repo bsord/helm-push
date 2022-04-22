@@ -21,6 +21,20 @@ steps:
       chart-folder: chart
 ```
 
+Using Token Auth with OCI Registry:
+```yaml
+steps:
+  - name: Push Helm chart to OCI compatible registry (Github)
+    uses: bsord/helm-push@v4
+    with:
+      useOCIRegistry: true
+      registry-url:  https://ghcr.io/${{ github.repository }}
+      username: bsord
+      access-token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+      force: true
+      chart-folder: chart
+```
+
 Using Password Auth:
 ```yaml
 steps:

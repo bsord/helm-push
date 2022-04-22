@@ -29,10 +29,13 @@ if [ "$USE_OCI_REGISTRY" == "TRUE" ] || [ "$USE_OCI_REGISTRY" == "true" ]; then
   echo "OCI SPECIFIED, USING HELM OCI FEATURES"
   REGISTRY=$(echo "${REGISTRY_URL}" | awk -F[/:] '{print $4}') # Get registry host from url
   echo "${REGISTRY_ACCESS_TOKEN}" | helm registry login -u ${REGISTRY_USERNAME} --password-stdin ${REGISTRY} # Authenticate registry
-  REGISTRY_URL=$(echo "${REGISTRY_URL#*//}")
-  VERSION=$(helm chart save ${CHART_FOLDER} ${REGISTRY_URL} | grep 'saved' | cut -d':' -f1) # Save the chart, and extract version
-  FULLPACKAGEREF="${REGISTRY_URL}:${VERSION}"
-  helm chart push ${FULLPACKAGEREF} # Push chart to registry
+  echo "Packaging chart '$CHART_NAME'"
+  PKG_RESPONSE=$(helm package $CHART_NAME) # package chart
+  echo "$PKG_RESPONSE"
+  CHART_TAR_GZ=$(basename "$PKG_RESPONSE") # extract tar name from helm package stdout
+  echo "Pushing chart $CHART_TAR_GZ to 'oci://$REGISTRY'"
+  helm push "$CHART_TAR_GZ" "oci://$REGISTRY"
+  echo "Successfully pushed chart $CHART_TAR_GZ to 'oci://$REGISTRY'"
   exit 0
 fi
 

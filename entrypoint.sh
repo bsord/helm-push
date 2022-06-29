@@ -30,9 +30,9 @@ if [ "$USE_OCI_REGISTRY" == "TRUE" ] || [ "$USE_OCI_REGISTRY" == "true" ]; then
   REGISTRY=$(echo "${REGISTRY_URL}" | awk -F[/:] '{print $4}') # Get registry host from url
   echo "${REGISTRY_ACCESS_TOKEN}" | helm registry login -u ${REGISTRY_USERNAME} --password-stdin ${REGISTRY} # Authenticate registry
   REGISTRY_URL=$(echo "${REGISTRY_URL#*//}")
-  helm chart save ${CHART_FOLDER} ${REGISTRY_URL} # Save the chart, using tag from the chart
-  FULLPACKAGEREF=$(helm chart list | sed '2q;d' | cut -d' ' -f1) # Get full package reference from newly saved chart
-  helm chart push ${FULLPACKAGEREF} # Push chart to registry
+  helm package ${CHART_FOLDER} # Save the chart, using tag from the chart
+  #FULLPACKAGEREF=$(helm chart list | sed '2q;d' | cut -d' ' -f1) # Get full package reference from newly saved chart
+  helm push $(ls | grep .tgz) ${REGISTRY_URL} # Push chart to registry
   exit 0
 fi
 

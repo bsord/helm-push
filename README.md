@@ -1,8 +1,7 @@
 # Helm Push
-![Build](https://github.com/bsord/helm-push/workflows/Build/badge.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/bsord/helm-push.svg)
-![License](https://img.shields.io/github/license/bsord/helm-push.svg?style=flat)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
+![Build](https://github.com/oodlefinance/helm-push/workflows/Build/badge.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/oodlefinance/helm-push.svg)
+![License](https://img.shields.io/github/license/oodlefinance/helm-push.svg?style=flat)
 
 Push a chart to a ChartMuseum or OCI compatible registry with Helm v3
 
@@ -11,7 +10,7 @@ Using Token Auth with OCI Registry:
 ```yaml
 steps:
   - name: Push Helm chart to OCI compatible registry (Github)
-    uses: bsord/helm-push@v4
+    uses: oodlefinance/helm-push@5.0.0
     with:
       useOCIRegistry: true
       registry-url:  https://ghcr.io/${{ github.repository }}
@@ -21,11 +20,30 @@ steps:
       chart-folder: chart
 ```
 
+Using Token Auth with AWS ECR: (Feel free to use any AWS CLI action step of your choice)
+```yaml
+steps:
+  - name: AWS ECR Login
+    id: ecr_login
+    uses: KaMeHb-UA/aws-cli-action@v3
+    with:
+      command: aws ecr get-login-password
+
+  - name: Push Helm chart to Amazon Elastic Container Registry (ECR)
+    uses: oodlefinance/helm-push@5.0.0
+    with:
+      useOCIRegistry: true
+      registry-url: oci://123456789123.dkr.ecr.eu-west-1.amazonaws.com
+      username: AWS
+      access-token: ${{ steps.ecr_login.outputs.result }}
+      chart-folder: chart
+```
+
 Using Password Auth:
 ```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
-    uses: bsord/helm-push@v4
+    uses: oodlefinance/helm-push@5.0.0
     with:
       username: ${{ secrets.HELM_USERNAME }}
       password: ${{ secrets.HELM_PASSWORD }}
@@ -38,7 +56,7 @@ Using Token Auth:
 ```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
-    uses: bsord/helm-push@v4
+    uses: oodlefinance/helm-push@5.0.0
     with:
       access-token: ${{ secrets.HELM_API_KEY }}
       registry-url: 'https://h.cfcr.io/user_or_org/reponame'

@@ -22,9 +22,9 @@ inputs:
     required: true
     default: ''
   chart-folder:
-      description: 'Relative path to chart folder'
-      required: false
-      default: 'chart'
+    description: 'Relative path to chart folder'
+    required: false
+    default: 'chart'
   version:
     description: 'Chart Version'
     required: false

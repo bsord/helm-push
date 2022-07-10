@@ -13,7 +13,7 @@ steps:
     uses: bsord/helm-push@4.0.2
     with:
       useOCIRegistry: true
-      registry-url:  https://ghcr.io/${{ github.repository }}
+      registry-url:  oci://ghcr.io/${{ github.repository }}
       username: bsord
       access-token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
       force: true
@@ -43,7 +43,7 @@ Using Password Auth:
 ```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
-    uses: bsord/helm-push@4.0.2
+    uses: bsord/helm-push@4.0.7
     with:
       username: ${{ secrets.HELM_USERNAME }}
       password: ${{ secrets.HELM_PASSWORD }}
@@ -56,7 +56,7 @@ Using Token Auth:
 ```yaml
 steps:
   - name: Push Helm Chart to ChartMuseum
-    uses: bsord/helm-push@4.0.2
+    uses: bsord/helm-push@4.0.7
     with:
       access-token: ${{ secrets.HELM_API_KEY }}
       registry-url: 'https://h.cfcr.io/user_or_org/reponame'

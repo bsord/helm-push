@@ -73,4 +73,4 @@ helm repo update
 helm lint .
 helm package . ${REGISTRY_APPVERSION} ${REGISTRY_VERSION}
 helm inspect chart *.tgz
-helm push *.tgz ${REGISTRY_URL} ${REGISTRY_USERNAME} ${REGISTRY_PASSWORD} ${REGISTRY_ACCESS_TOKEN} ${FORCE}
+helm push *.tgz ${REGISTRY_URL} ${REGISTRY_USERNAME} ${REGISTRY_PASSWORD} ${FORCE}

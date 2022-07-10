@@ -10,7 +10,7 @@ Using Token Auth with OCI Registry:
 ```yaml
 steps:
   - name: Push Helm chart to OCI compatible registry (Github)
-    uses: bsord/helm-push@4.0.2
+    uses: bsord/helm-push@4.0.7
     with:
       useOCIRegistry: true
       registry-url:  oci://ghcr.io/${{ github.repository }}
@@ -30,7 +30,7 @@ steps:
       command: aws ecr get-login-password
 
   - name: Push Helm chart to Amazon Elastic Container Registry (ECR)
-    uses: bsord/helm-push@4.0.2
+    uses: bsord/helm-push@4.0.7
     with:
       useOCIRegistry: true
       registry-url: oci://123456789123.dkr.ecr.eu-west-1.amazonaws.com

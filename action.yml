@@ -37,6 +37,10 @@ inputs:
     description: 'Whether or not to override existing chart with same version'
     required: false
     default: 'false'
+  update-dependencies:
+    description: "Whether or not to update dependencies before packaging"
+    required: false
+    default: "false"
   useOCIRegistry:
     description: 'If publishing to big cloud registries, utilizing OCI container spec for helm packages, set to true'
     required: false

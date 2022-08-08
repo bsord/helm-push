@@ -24,13 +24,19 @@ else
   FORCE=""
 fi
 
+if [ "$UPDATE_DEPENDENCIES" == "1" ] || [ "$UPDATE_DEPENDENCIES" == "True" ] || [ "$UPDATE_DEPENDENCIES" == "TRUE" ] || [ "$UPDATE_DEPENDENCIES" == "true" ]; then
+  UPDATE_DEPENDENCIES="-u"
+else
+  UPDATE_DEPENDENCIES=""
+fi
+
 if [ "$USE_OCI_REGISTRY" == "TRUE" ] || [ "$USE_OCI_REGISTRY" == "true" ]; then
   export HELM_EXPERIMENTAL_OCI=1
   echo "OCI SPECIFIED, USING HELM OCI FEATURES"
   REGISTRY=$(echo "${REGISTRY_URL}" | awk -F[/:] '{print $4}') # Get registry host from url
   echo "${REGISTRY_ACCESS_TOKEN}" | helm registry login -u ${REGISTRY_USERNAME} --password-stdin ${REGISTRY} # Authenticate registry
   echo "Packaging chart '$CHART_FOLDER'"
-  PKG_RESPONSE=$(helm package $CHART_FOLDER) # package chart
+  PKG_RESPONSE=$(helm package $CHART_FOLDER $UPDATE_DEPENDENCIES) # package chart
   echo "$PKG_RESPONSE"
   CHART_TAR_GZ=$(basename "$PKG_RESPONSE") # extract tar name from helm package stdout
   echo "Pushing chart $CHART_TAR_GZ to '$REGISTRY_URL'"
@@ -71,6 +77,6 @@ cd ${CHART_FOLDER}
 helm repo add stable https://charts.helm.sh/stable
 helm repo update
 helm lint .
-helm package . ${REGISTRY_APPVERSION} ${REGISTRY_VERSION}
+helm package . ${REGISTRY_APPVERSION} ${REGISTRY_VERSION} ${UPDATE_DEPENDENCIES}
 helm inspect chart *.tgz
 helm cm-push *.tgz ${REGISTRY_URL} ${REGISTRY_USERNAME} ${REGISTRY_PASSWORD} ${REGISTRY_ACCESS_TOKEN} ${FORCE}

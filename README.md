@@ -75,6 +75,7 @@ steps:
 | `registry-url` | Registry url | **Yes** | "" |
 | `chart-folder` | Relative path to chart folder to be published| No | chart |
 | `force` | Force overwrite if version already exists | No | false |
+| `update-dependencies` | Update dependencies from "Chart.yaml" to dir "charts/" before packaging | No | false |
 
 ## License
 

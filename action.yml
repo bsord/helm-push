@@ -58,3 +58,4 @@ runs:
     REGISTRY_VERSION: ${{ inputs.version }}
     REGISTRY_APPVERSION: ${{ inputs.appVersion }}
     USE_OCI_REGISTRY: ${{ inputs.useOCIRegistry }}
+    UPDATE_DEPENDENCIES: ${{ inputs.update-dependencies }}

@@ -18,6 +18,16 @@ if [ -z "$REGISTRY_ACCESS_TOKEN" ]; then
   fi
 fi
 
+if [ "$REGISTRY_VERSION" ]; then
+  echo "Version is defined, using as parameter."
+  REGISTRY_VERSION="--version ${REGISTRY_VERSION}"
+fi
+
+if [ "$REGISTRY_APPVERSION" ]; then
+  echo "App version is defined, using as parameter."
+  REGISTRY_APPVERSION="--app-version ${REGISTRY_APPVERSION}"
+fi
+
 if [ "$FORCE" == "1" ] || [ "$FORCE" == "True" ] || [ "$FORCE" == "TRUE" ] || [ "$FORCE" == "true" ]; then
   FORCE="-f"
 else
@@ -36,7 +46,7 @@ if [ "$USE_OCI_REGISTRY" == "TRUE" ] || [ "$USE_OCI_REGISTRY" == "true" ]; then
   REGISTRY=$(echo "${REGISTRY_URL}" | awk -F[/:] '{print $4}') # Get registry host from url
   echo "${REGISTRY_ACCESS_TOKEN}" | helm registry login -u ${REGISTRY_USERNAME} --password-stdin ${REGISTRY} # Authenticate registry
   echo "Packaging chart '$CHART_FOLDER'"
-  PKG_RESPONSE=$(helm package $CHART_FOLDER $UPDATE_DEPENDENCIES) # package chart
+  PKG_RESPONSE=$(helm package $CHART_FOLDER $REGISTRY_APPVERSION $REGISTRY_VERSION $UPDATE_DEPENDENCIES) # package chart
   echo "$PKG_RESPONSE"
   CHART_TAR_GZ=$(basename "$PKG_RESPONSE") # extract tar name from helm package stdout
   echo "Pushing chart $CHART_TAR_GZ to '$REGISTRY_URL'"
@@ -61,17 +71,6 @@ if [ "$REGISTRY_PASSWORD" ]; then
   echo "Password is defined, using as parameter."
   REGISTRY_PASSWORD="--password ${REGISTRY_PASSWORD}"
 fi
-
-if [ "$REGISTRY_VERSION" ]; then
-  echo "Version is defined, using as parameter."
-  REGISTRY_VERSION="--version ${REGISTRY_VERSION}"
-fi
-
-if [ "$REGISTRY_APPVERSION" ]; then
-  echo "App version is defined, using as parameter."
-  REGISTRY_APPVERSION="--app-version ${REGISTRY_APPVERSION}"
-fi
-
 
 
 cd ${CHART_FOLDER}

@@ -52,7 +52,7 @@ if [ "$USE_OCI_REGISTRY" == "TRUE" ] || [ "$USE_OCI_REGISTRY" == "true" ]; then
   echo "Pushing chart $CHART_TAR_GZ to '$REGISTRY_URL'"
   helm push "$CHART_TAR_GZ" "$REGISTRY_URL"
   echo "Successfully pushed chart $CHART_TAR_GZ to '$REGISTRY_URL'"
-  rm -rf ${CHART_FOLDER}/charts/*.tgz ${CHART_FOLDER}/*.tgz *.tgz
+  rm -rf ${CHART_FOLDER}/charts/ ${CHART_TAR_GZ}
   exit 0
 fi
 
@@ -77,7 +77,9 @@ cd ${CHART_FOLDER}
 helm repo add stable https://charts.helm.sh/stable
 helm repo update
 helm lint .
-helm package . ${REGISTRY_APPVERSION} ${REGISTRY_VERSION} ${UPDATE_DEPENDENCIES}
-helm inspect chart *.tgz
-helm cm-push *.tgz ${REGISTRY_URL} ${REGISTRY_USERNAME} ${REGISTRY_PASSWORD} ${REGISTRY_ACCESS_TOKEN} ${FORCE}
-rm -rf ${CHART_FOLDER}/charts/*.tgz ${CHART_FOLDER}/*.tgz *.tgz
+PKG_RESPONSE=$(helm package . ${REGISTRY_APPVERSION} ${REGISTRY_VERSION} ${UPDATE_DEPENDENCIES})
+echo "$PKG_RESPONSE"
+CHART_TAR_GZ=$(basename "$PKG_RESPONSE")
+helm inspect chart $CHART_TAR_GZ
+helm cm-push ${CHART_TAR_GZ} ${REGISTRY_URL} ${REGISTRY_USERNAME} ${REGISTRY_PASSWORD} ${REGISTRY_ACCESS_TOKEN} ${FORCE}
+rm -rf charts $CHART_TAR_GZ

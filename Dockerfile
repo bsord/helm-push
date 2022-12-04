@@ -1,4 +1,4 @@
-FROM plugins/base:linux-amd64
+FROM alpine:3
 
 ENV XDG_DATA_HOME=/opt/xdg
 ENV XDG_CACHE_HOME=/opt/xdg-cache

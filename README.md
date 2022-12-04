@@ -66,16 +66,17 @@ steps:
 
 ### Parameters
 
-| Key | Value | Required | Default |
-| ------------- | ------------- | ------------- | ------------- |
-| `useOCIRegistry` | Push to OCI compatibly registry | No | false |
-| `access-token` | API Token with Helm read/write permissions | **Yes** (if using token auth) | "" |
-| `username` | Username for registry | **Yes** (if using pw auth) | "" |
-| `password` | Password for registry | **Yes** (if using pw auth) | "" |
-| `registry-url` | Registry url | **Yes** | "" |
-| `chart-folder` | Relative path to chart folder to be published| No | chart |
-| `force` | Force overwrite if version already exists | No | false |
-| `update-dependencies` | Update dependencies from "Chart.yaml" to dir "charts/" before packaging | No | false |
+| Key | Value                                                                                       | Required | Default |
+| ------------- |---------------------------------------------------------------------------------------------| ------------- | ------------- |
+| `useOCIRegistry` | Push to OCI compatibly registry                                                             | No | false |
+| `access-token` | API Token with Helm read/write permissions                                                  | **Yes** (if using token auth) | "" |
+| `username` | Username for registry                                                                       | **Yes** (if using pw auth) | "" |
+| `password` | Password for registry                                                                       | **Yes** (if using pw auth) | "" |
+| `registry-url` | Registry url                                                                                | **Yes** | "" |
+| `chart-folder` | Relative path to chart folder to be published                                               | No | chart |
+| `force` | Force overwrite if version already exists                                                   | No | false |
+| `update-dependencies` | Update dependencies from "Chart.yaml" to dir "charts/" before packaging                     | No | false |
+| `add-repositories` | Optionally add list of Helm Repositories to add running `helm repo add $args` for each line | No | "" |
 
 ## License
 

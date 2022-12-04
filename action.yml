@@ -46,7 +46,7 @@ inputs:
     required: false
     default: 'false'
   add-repositories:
-    description: 'Optionally add list of Helm Repositories to add running `helm repo add $args`'
+    description: 'Optionally add list of Helm Repositories to add running `helm repo add $args` for each line'
     required: false
     # valid list of args for `helm repo add $args` each line maps to repo add e.g.
     # add-repositories: |

@@ -1,6 +1,6 @@
 # action.yml
 name: 'Helm Push'
-description: 'Pushes a local chart to a ChartMusem or OCI compatible registry. Supports token based auth and Chart.yaml version override.'
+description: 'Pushes a local chart to a ChartMuseum or OCI compatible registry. Supports token based auth and Chart.yaml version override.'
 branding:
   color: 'green'
   icon: 'upload-cloud'
@@ -45,6 +45,15 @@ inputs:
     description: 'If publishing to big cloud registries, utilizing OCI container spec for helm packages, set to true'
     required: false
     default: 'false'
+  add-repositories:
+    description: 'Optionally add list of Helm Repositories to add running `helm repo add $args` for each line'
+    required: false
+    # valid list of args for `helm repo add $args` each line maps to repo add e.g.
+    # add-repositories: |
+    #     stable https://charts.helm.sh/stable
+    #     private https//private.internal --username private --password 'bulls eye'
+    #     ...
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -58,3 +67,5 @@ runs:
     REGISTRY_VERSION: ${{ inputs.version }}
     REGISTRY_APPVERSION: ${{ inputs.appVersion }}
     USE_OCI_REGISTRY: ${{ inputs.useOCIRegistry }}
+    UPDATE_DEPENDENCIES: ${{ inputs.update-dependencies }}
+    ADD_REPOSITORIES: ${{ inputs.add-repositories }}
